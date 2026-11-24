@@ -47,8 +47,3 @@ Os demais endpoints documentados (produto: `GET /{codigo}`, `POST`, `PUT`, `DELE
 - **Correção `alterarSenha`**: o controller passava o `documento` no lugar da senha antiga. Agora confirma e-mail + documento, grava a nova senha e reativa o cliente. Se os dados não baterem, devolve `Dados não conferem! ...`.
 - **Mensagens do Pedido**: `Cliente gravado...` virou `Pedido gravado...` e `PEdido` virou `Pedido`.
 
-## Observações
-
-- O endereço do cadastro (rua, número, complemento, cidade, CEP) é gravado junto no campo `logradouro`. A data de nascimento é validada na tela, mas o backend não tem campo para ela.
-- O CPF é gravado só com dígitos.
-- Os campos de senha ainda são guardados em texto puro no banco (como já era). Vale trocar por hash antes de qualquer uso real.
