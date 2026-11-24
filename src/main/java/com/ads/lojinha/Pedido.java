@@ -5,9 +5,11 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -20,10 +22,14 @@ public class Pedido {
     private String obs;
     private Date dataPedido;
     private int codigoCliente;
-  /*   @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, 
-        orphanRemoval =  true)
+    private String status;
+    private String formaPagamento;
+    private int parcelas;
+    // Itens do pedido: unidirecional, a FK (codigo_pedido) fica na tabela item_pedido
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "codigoPedido")
     private List<ItemPedido> itens = new ArrayList<>();
-*/
+
     public int getCodigoPedido() {
         return codigoPedido;
     }
@@ -60,13 +66,29 @@ public class Pedido {
     public void setCodigoCliente(int codigoCliente) {
         this.codigoCliente = codigoCliente;
     }
-  /* 
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+    public void setFormaPagamento(String formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+    public int getParcelas() {
+        return parcelas;
+    }
+    public void setParcelas(int parcelas) {
+        this.parcelas = parcelas;
+    }
     public List<ItemPedido> getItens() {
         return itens;
     }
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
-*/
 
 }

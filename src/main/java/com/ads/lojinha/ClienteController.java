@@ -31,13 +31,23 @@ public class ClienteController {
 
     @PostMapping("/api/cliente")
     public String gravar(@RequestBody Cliente obj){
+        if(obj.getEmail() != null && bd.existsByEmail(obj.getEmail())){
+            return "E-mail já cadastrado!";
+        }
+        obj.setCodigo(0);   // novo cadastro: o banco gera o código
+        obj.setAtivo(1);    // cliente novo já nasce ativo (login só aceita ativo=1)
         bd.save(obj);
         return "Cliente gravado com sucesso! "+ obj.getCodigo();
     }
    
     @PutMapping("/api/cliente")
     public String alterar(@RequestBody Cliente obj){
-        if(bd.existsById(obj.getCodigo())){
+        Optional<Cliente> atual = bd.findById(obj.getCodigo());
+        if(atual.isPresent()){
+            // a senha não é devolvida nos GETs; se o PUT vier sem ela, mantém a atual
+            if(obj.getSenha() == null){
+                obj.setSenha(atual.get().getSenha());
+            }
             bd.save(obj);
             return "Cliente alterado com sucesso! "+ obj.getCodigo();
         } else {
@@ -71,7 +81,10 @@ public class ClienteController {
 
     @PatchMapping("/api/cliente/alterarSenha")
     public String alterarSenha(@RequestBody Cliente obj){
-        bd.alterarSenha(obj.getSenha(), obj.getDocumento(), obj.getEmail());
+        int linhas = bd.alterarSenha(obj.getSenha(), obj.getDocumento(), obj.getEmail());
+        if(linhas == 0){
+            return "Dados não conferem! Verifique o e-mail e o documento.";
+        }
         //TODO ENVIAR EMAIL
         return "Sua senha foi alterada, verifique o seu email!";
     }

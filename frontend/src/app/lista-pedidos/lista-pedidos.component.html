@@ -1,0 +1,55 @@
+<div class="jewelry-card pedidos-container">
+    <h2 class="page-title">Meus Pedidos</h2>
+
+    @if (carregando()) {
+    <div class="pedidos-vazio">
+        <p>Carregando seus pedidos...</p>
+    </div>
+    } @else if (erro()) {
+    <div class="pedidos-vazio">
+        <p>{{ erro() }}</p>
+    </div>
+    } @else if (pedidos.length === 0) {
+    <div class="pedidos-vazio">
+        <p>Nenhum pedido aprovado ainda.</p>
+        <p>Explore nossas coleções e finalize sua compra.</p>
+        <a href="/vitrine" class="btn-gold-link">Ver Vitrine</a>
+    </div>
+    } @else {
+    <table class="pedidos-table">
+        <thead>
+            <tr>
+                <th>Nº do Pedido</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Valor Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (pedido of pedidos; track pedido.id) {
+            <tr class="pedido-row">
+                <td class="pedido-id">#{{ pedido.id }}</td>
+                <td>{{ pedido.data }}</td>
+                <td>
+                    <span class="status-badge" [class.awaiting]="pedido.status === 'Aguardando Pagamento'"
+                        [class.confirmed]="pedido.status === 'Pagamento Confirmado'">
+                        {{ pedido.status }}
+                    </span>
+                </td>
+                <td class="pedido-total">{{ formatarMoeda(pedido.total) }}</td>
+                <td class="pedido-acoes">
+                    @if (pedido.status === 'Aguardando Pagamento') {
+                    <button class="btn-pagar" (click)="irParaPagamento(pedido.id)">
+                        Pagar
+                    </button>
+                    } @else {
+                    <span class="pago-label">✓ Pago</span>
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    }
+</div>

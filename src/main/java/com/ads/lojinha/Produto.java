@@ -17,6 +17,7 @@ public class Produto {
     private double valorPromo;
     private int quantidade;
     private int destaque;
+    private String imagem;
     public int getCodigo() {
         return codigo;
     }
@@ -58,6 +59,12 @@ public class Produto {
     }
     public void setDestaque(int destaque) {
         this.destaque = destaque;
+    }
+    public String getImagem() {
+        return imagem;
+    }
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
     }
 
 

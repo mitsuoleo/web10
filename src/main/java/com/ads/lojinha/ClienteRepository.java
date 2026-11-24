@@ -15,15 +15,19 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
     @Query(value = "select * from cliente where ativo=1 and email=:email and senha=:senha", nativeQuery = true)
     public Optional<Cliente> fazerLogin(String email, String senha);
 
+    boolean existsByEmail(String email);
+
     @Modifying
     @Transactional
     @Query(value = "update cliente set senha=:senhaTemp, ativo=0 where "+
     " email=:email", nativeQuery=true)
     int resetarSenha(String senhaTemp, String email);
 
+    // Troca a senha confirmando e-mail + documento (conforme a documentação da API)
+    // e reativa o cliente (ativo=1), que fica 0 depois do resetarSenha.
     @Modifying
     @Transactional
     @Query(value = "update cliente set senha=:novaSenha, ativo=1 where "+
-    " email=:email and senha=:antigaSenha", nativeQuery=true)
-    int alterarSenha(String novaSenha, String antigaSenha, String email);
+    " email=:email and documento=:documento", nativeQuery=true)
+    int alterarSenha(String novaSenha, String documento, String email);
 }

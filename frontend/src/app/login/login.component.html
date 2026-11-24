@@ -1,0 +1,40 @@
+<div class="chic-card">
+    <h2 class="page-title">Acesse sua Conta</h2>
+
+    @if (erroLogin()) {
+    <div class="alert-erro">
+        ⚠ {{ erroLogin() }}
+    </div>
+    }
+
+    <div class="form-container">
+        <form (ngSubmit)="entrar()" novalidate>
+            <div class="form-group">
+                <label for="txtEmail">E-mail</label>
+                <input type="email" id="txtEmail" [(ngModel)]="email" name="email"
+                    placeholder="Seu e-mail cadastrado" [class.input-erro]="erroLogin()">
+            </div>
+            <div class="form-group">
+                <label for="txtSenha">Senha</label>
+                <input type="password" id="txtSenha" [(ngModel)]="senha" name="senha" placeholder="Sua senha"
+                    [class.input-erro]="erroLogin()">
+            </div>
+
+            <button type="submit" class="btn-primary btn-full" style="margin-top: 1rem;" [disabled]="enviando()">{{ enviando() ? 'Entrando...' : 'Entrar' }}</button>
+        </form>
+
+        <hr class="divider">
+
+        <div class="login-actions">
+            <div class="action-box">
+                <p>Esqueceu sua senha?</p>
+                <a routerLink="/reenvio" class="btn-outline btn-full">Recuperar Senha</a>
+            </div>
+
+            <div class="action-box">
+                <p>Ainda não é cliente?</p>
+                <a routerLink="/cadastro" class="btn-outline btn-full">Criar Conta</a>
+            </div>
+        </div>
+    </div>
+</div>

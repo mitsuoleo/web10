@@ -1,0 +1,43 @@
+<div class="vitrine-container">
+    <h2 class="page-title">As Joias Mais Vendidas</h2>
+
+    <!-- Barra de busca -->
+    <div class="search-bar-container">
+        <input type="text" [(ngModel)]="termoBusca" (ngModelChange)="aoMudarBusca()" placeholder="Buscar joias..." class="search-input">
+    </div>
+
+    <div class="products-grid">
+        @for (produto of produtosPaginados; track produto.id) {
+        <div class="jewelry-card product-card">
+            <img [src]="produto.img"
+                [alt]="produto.nome" class="product-image">
+            <h3 class="product-name">{{produto.nome}}</h3>
+            <p class="product-desc">{{produto.desc}}</p>
+            <p class="product-price">{{produto.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}}</p>
+            <button class="btn-primary btn-full" (click)="adicionarNaCesta(produto)">Escolha Aqui</button>
+        </div>
+        }
+        @empty {
+            @if (carregando()) {
+                <p class="no-results">Carregando produtos...</p>
+            } @else if (erro()) {
+                <p class="no-results">{{ erro() }}</p>
+            } @else {
+                <p class="no-results">Nenhum produto encontrado.</p>
+            }
+        }
+    </div>
+
+    <!-- Paginação -->
+    @if (totalPaginas > 1) {
+    <div class="pagination">
+        <button class="btn-page" [disabled]="paginaAtual === 1" (click)="mudarPagina(paginaAtual - 1)">&laquo; Anterior</button>
+        
+        @for (pagina of arrayPaginas; track pagina) {
+            <button class="btn-page" [class.active]="pagina === paginaAtual" (click)="mudarPagina(pagina)">{{ pagina }}</button>
+        }
+        
+        <button class="btn-page" [disabled]="paginaAtual === totalPaginas" (click)="mudarPagina(paginaAtual + 1)">Próximo &raquo;</button>
+    </div>
+    }
+</div>

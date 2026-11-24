@@ -1,0 +1,34 @@
+.subtitulo {
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin: 0 0 1.5rem 0;
+}
+
+.alert-erro {
+    background: rgba(192, 57, 43, 0.08);
+    border-left: 3px solid #c0392b;
+    color: #c0392b;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.alert-sucesso {
+    background: rgba(21, 71, 52, 0.1);
+    border-left: 3px solid var(--dark-green, #1a3c34);
+    color: var(--dark-green, #1a3c34);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.voltar {
+    text-align: center;
+    margin: 2rem 0 0 0;
+    font-size: 0.9rem;
+}

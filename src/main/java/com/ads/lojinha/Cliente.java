@@ -1,5 +1,7 @@
 package com.ads.lojinha;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,6 +15,7 @@ public class Cliente {
     private String nome;
     private String telefone;
     private String documento;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String logradouro;
     private String email;
